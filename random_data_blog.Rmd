@@ -150,7 +150,7 @@ Thanks for reading, your feedback is welcomed.
 
 ---
 
-\**Get the R code for this post [HERE](https://raw.githubusercontent.com/trinker/random_data/master/random_data_blog.R)
+\**Get the R code for this post [HERE](https://raw.githubusercontent.com/trinker/random_data/master/random_data_blog.R)    
 \**Get a PDf version this post [HERE](https://github.com/trinker/random_data/blob/master/random_data_blog.pdf)
 
 

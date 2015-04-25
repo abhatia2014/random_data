@@ -90,13 +90,12 @@ img {
 <div id="random-variable-functions" class="section level2">
 <h2><span class="header-section-number">1.1</span> Random Variable Functions</h2>
 <p>First we’ll use the <a href="http://cran.r-project.org/web/packages/pacman/index.html"><strong>pacman</strong></a> package to grab and load the <strong>wakefield</strong> package from GitHub.</p>
-<pre class="r"><code>if (!require(&quot;pacman&quot;)) install.packages(&quot;pacman&quot;); library(pacman)</code></pre>
-<pre><code>## Loading required package: pacman</code></pre>
-<pre class="r"><code>p_load_gh(&quot;trinker/wakefield&quot;)</code></pre>
+<pre class="r"><code>if (!require(&quot;pacman&quot;)) install.packages(&quot;pacman&quot;); library(pacman)
+p_load_gh(&quot;trinker/wakefield&quot;)</code></pre>
 <p>Then we’ll look at a random variable generating function.</p>
 <pre class="r"><code>race(n=10)</code></pre>
-<pre><code>##  [1] White    White    Hispanic White    White    White    Hispanic
-##  [8] White    Hispanic White   
+<pre><code>##  [1] White    White    White    Black    White    Hispanic Black   
+##  [8] Asian    Hispanic White   
 ## Levels: White Hispanic Black Asian Bi-Racial Native Other Hawaiian</code></pre>
 <pre class="r"><code>attributes(race(n=10))</code></pre>
 <pre><code>## $levels
@@ -110,22 +109,22 @@ img {
 ## [1] &quot;Race&quot;</code></pre>
 <p>A few more…</p>
 <pre class="r"><code>sex(10)</code></pre>
-<pre><code>##  [1] Male   Male   Male   Female Female Female Male   Male   Female Female
+<pre><code>##  [1] Male   Female Male   Male   Male   Female Male   Male   Male   Male  
 ## Levels: Male Female</code></pre>
 <pre class="r"><code>likert_7(10)</code></pre>
-<pre><code>##  [1] Strongly Agree    Neutral           Somewhat Disagree
-##  [4] Strongly Agree    Agree             Strongly Agree   
-##  [7] Strongly Disagree Neutral           Agree            
-## [10] Strongly Disagree
+<pre><code>##  [1] Strongly Agree    Strongly Agree    Neutral          
+##  [4] Somewhat Agree    Disagree          Disagree         
+##  [7] Somewhat Disagree Neutral           Strongly Agree   
+## [10] Agree            
 ## 7 Levels: Strongly Disagree &lt; Disagree &lt; ... &lt; Strongly Agree</code></pre>
 <pre class="r"><code>gpa(10)</code></pre>
-<pre><code>##  [1] 3.00 3.33 4.00 3.33 4.00 3.67 3.67 3.00 4.00 3.00</code></pre>
+<pre><code>##  [1] 3.00 3.67 2.67 3.33 3.00 4.00 3.00 3.00 3.67 3.00</code></pre>
 <pre class="r"><code>dna(10)</code></pre>
-<pre><code>##  [1] &quot;Guanine&quot;  &quot;Cytosine&quot; &quot;Guanine&quot;  &quot;Guanine&quot;  &quot;Thymine&quot;  &quot;Thymine&quot; 
-##  [7] &quot;Guanine&quot;  &quot;Thymine&quot;  &quot;Thymine&quot;  &quot;Thymine&quot;</code></pre>
+<pre><code>##  [1] &quot;Adenine&quot;  &quot;Thymine&quot;  &quot;Thymine&quot;  &quot;Thymine&quot;  &quot;Adenine&quot;  &quot;Cytosine&quot;
+##  [7] &quot;Guanine&quot;  &quot;Thymine&quot;  &quot;Thymine&quot;  &quot;Guanine&quot;</code></pre>
 <pre class="r"><code>string(10, length = 5)</code></pre>
-<pre><code>##  [1] &quot;aC719&quot; &quot;iNYc1&quot; &quot;K9WC1&quot; &quot;y9doR&quot; &quot;Zt8fi&quot; &quot;7seVk&quot; &quot;Ujk52&quot; &quot;ybsL0&quot;
-##  [9] &quot;D6ocZ&quot; &quot;qSQCp&quot;</code></pre>
+<pre><code>##  [1] &quot;L3MPu&quot; &quot;tyTgQ&quot; &quot;mqBWh&quot; &quot;uGnch&quot; &quot;6KKZC&quot; &quot;DdLrw&quot; &quot;t2lEJ&quot; &quot;Hir6Y&quot;
+##  [9] &quot;eE4v9&quot; &quot;oPb4u&quot;</code></pre>
 </div>
 <div id="random-data-frames" class="section level2">
 <h2><span class="header-section-number">1.2</span> Random Data Frames</h2>
@@ -280,7 +279,7 @@ dplyr::data_frame(
 </ol>
 <p>Thanks for reading, your feedback is welcomed.</p>
 <hr />
-<p>*<em>Get the R code for this post <a href="https://raw.githubusercontent.com/trinker/random_data/master/random_data_blog.R">HERE</a> *</em>Get a PDf version this post <a href="https://github.com/trinker/random_data/blob/master/random_data_blog.pdf">HERE</a></p>
+<p>*<em>Get the R code for this post <a href="https://raw.githubusercontent.com/trinker/random_data/master/random_data_blog.R">HERE</a><br />*</em>Get a PDf version this post <a href="https://github.com/trinker/random_data/blob/master/random_data_blog.pdf">HERE</a></p>
 </div>
 
 
