@@ -95,8 +95,8 @@ img {
 <pre class="r"><code>p_load_gh(&quot;trinker/wakefield&quot;)</code></pre>
 <p>Then we’ll look at a random variable generating function.</p>
 <pre class="r"><code>race(n=10)</code></pre>
-<pre><code>##  [1] Asian    Asian    White    Hispanic Black    Asian    Hispanic
-##  [8] White    Black    White   
+<pre><code>##  [1] White    White    Hispanic White    White    White    Hispanic
+##  [8] White    Hispanic White   
 ## Levels: White Hispanic Black Asian Bi-Racial Native Other Hawaiian</code></pre>
 <pre class="r"><code>attributes(race(n=10))</code></pre>
 <pre><code>## $levels
@@ -110,22 +110,22 @@ img {
 ## [1] &quot;Race&quot;</code></pre>
 <p>A few more…</p>
 <pre class="r"><code>sex(10)</code></pre>
-<pre><code>##  [1] Male   Female Female Male   Male   Female Male   Female Female Male  
+<pre><code>##  [1] Male   Male   Male   Female Female Female Male   Male   Female Female
 ## Levels: Male Female</code></pre>
 <pre class="r"><code>likert_7(10)</code></pre>
-<pre><code>##  [1] Somewhat Agree    Agree             Disagree         
-##  [4] Somewhat Disagree Somewhat Agree    Strongly Disagree
-##  [7] Neutral           Strongly Agree    Somewhat Disagree
-## [10] Somewhat Disagree
+<pre><code>##  [1] Strongly Agree    Neutral           Somewhat Disagree
+##  [4] Strongly Agree    Agree             Strongly Agree   
+##  [7] Strongly Disagree Neutral           Agree            
+## [10] Strongly Disagree
 ## 7 Levels: Strongly Disagree &lt; Disagree &lt; ... &lt; Strongly Agree</code></pre>
 <pre class="r"><code>gpa(10)</code></pre>
-<pre><code>##  [1] 3.33 3.67 3.33 2.67 2.67 3.33 2.33 3.33 3.00 2.67</code></pre>
+<pre><code>##  [1] 3.00 3.33 4.00 3.33 4.00 3.67 3.67 3.00 4.00 3.00</code></pre>
 <pre class="r"><code>dna(10)</code></pre>
-<pre><code>##  [1] &quot;Cytosine&quot; &quot;Thymine&quot;  &quot;Thymine&quot;  &quot;Guanine&quot;  &quot;Cytosine&quot; &quot;Cytosine&quot;
-##  [7] &quot;Adenine&quot;  &quot;Adenine&quot;  &quot;Cytosine&quot; &quot;Cytosine&quot;</code></pre>
+<pre><code>##  [1] &quot;Guanine&quot;  &quot;Cytosine&quot; &quot;Guanine&quot;  &quot;Guanine&quot;  &quot;Thymine&quot;  &quot;Thymine&quot; 
+##  [7] &quot;Guanine&quot;  &quot;Thymine&quot;  &quot;Thymine&quot;  &quot;Thymine&quot;</code></pre>
 <pre class="r"><code>string(10, length = 5)</code></pre>
-<pre><code>##  [1] &quot;LE4gv&quot; &quot;WU6xh&quot; &quot;Gu75S&quot; &quot;cyDcO&quot; &quot;w5g0d&quot; &quot;RJlBF&quot; &quot;iLcK1&quot; &quot;QoEaT&quot;
-##  [9] &quot;NbA8T&quot; &quot;Zftp1&quot;</code></pre>
+<pre><code>##  [1] &quot;aC719&quot; &quot;iNYc1&quot; &quot;K9WC1&quot; &quot;y9doR&quot; &quot;Zt8fi&quot; &quot;7seVk&quot; &quot;Ujk52&quot; &quot;ybsL0&quot;
+##  [9] &quot;D6ocZ&quot; &quot;qSQCp&quot;</code></pre>
 </div>
 <div id="random-data-frames" class="section level2">
 <h2><span class="header-section-number">1.2</span> Random Data Frames</h2>
@@ -280,7 +280,7 @@ dplyr::data_frame(
 </ol>
 <p>Thanks for reading, your feedback is welcomed.</p>
 <hr />
-<p>**Get the R code for this post <a href>HERE</a></p>
+<p>*<em>Get the R code for this post <a href="https://raw.githubusercontent.com/trinker/random_data/master/random_data_blog.R">HERE</a> *</em>Get a PDf version this post <a href="https://github.com/trinker/random_data/blob/master/random_data_blog.pdf">HERE</a></p>
 </div>
 
 
