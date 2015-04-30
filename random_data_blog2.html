@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+<title>Wakefield: Random Data Set (Part II)</title>
+
+<script src="random_data_blog2_files/jquery-1.11.0/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="random_data_blog2_files/bootstrap-3.3.1/css/journal.min.css" rel="stylesheet" />
+<script src="random_data_blog2_files/bootstrap-3.3.1/js/bootstrap.min.js"></script>
+<script src="random_data_blog2_files/bootstrap-3.3.1/shim/html5shiv.min.js"></script>
+<script src="random_data_blog2_files/bootstrap-3.3.1/shim/respond.min.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<link rel="stylesheet"
+      href="random_data_blog2_files/highlight/default.css"
+      type="text/css" />
+<script src="random_data_blog2_files/highlight/highlight.js"></script>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img { 
+  max-width:100%; 
+  height: auto; 
+}
+</style>
+<div class="container-fluid main-container">
+
+
+<div id="header">
+<h1 class="title">Wakefield: Random Data Set (Part II)</h1>
+<h4 class="date"><em>29 April, 2015</em></h4>
+</div>
+
+<div id="TOC">
+<ul>
+<li><a href="#brief-package-description"><span class="toc-section-number">1</span> Brief Package Description</a></li>
+<li><a href="#improvements"><span class="toc-section-number">2</span> Improvements</a><ul>
+<li><a href="#repeated-measures-series"><span class="toc-section-number">2.1</span> Repeated Measures Series</a></li>
+<li><a href="#dummy-coding-expansion-of-factors"><span class="toc-section-number">2.2</span> Dummy Coding Expansion of Factors</a></li>
+<li><a href="#factor-to-numeric-conversion"><span class="toc-section-number">2.3</span> Factor to Numeric Conversion</a></li>
+<li><a href="#viewing-whole-data-set"><span class="toc-section-number">2.4</span> Viewing Whole Data Set</a></li>
+<li><a href="#visualizing-column-types-and-nas"><span class="toc-section-number">2.5</span> Visualizing Column Types and NAs</a></li>
+</ul></li>
+<li><a href="#table-of-variable-functions"><span class="toc-section-number">3</span> Table of Variable Functions</a></li>
+<li><a href="#possible-uses"><span class="toc-section-number">4</span> Possible Uses</a><ul>
+<li><a href="#testing-methods"><span class="toc-section-number">4.1</span> Testing Methods</a></li>
+<li><a href="#unique-student-data-for-course-assignments"><span class="toc-section-number">4.2</span> Unique Student Data for Course Assignments</a></li>
+<li><a href="#blogging-and-online-help-communities"><span class="toc-section-number">4.3</span> Blogging and Online Help Communities</a></li>
+</ul></li>
+<li><a href="#getting-involved"><span class="toc-section-number">5</span> Getting Involved</a></li>
+</ul>
+</div>
+
+<p>This post is part II of a series detailing the GitHub package, <a href="https://github.com/trinker/wakefield"><strong>wakefield</strong></a>, for generating random data sets. The <a href="https://trinkerrstuff.wordpress.com/2015/04/25/random-data-sets-quickly/">First Post (part I)</a> was a test run to gauge user interest. I received positive feedback and some ideas for improvements, which I’ll share below.</p>
+<p><img src="http://raw.githubusercontent.com/trinker/wakefield/master/inst/wakefield_logo/r_wakefield.png" width = "250"/></p>
+<p>The post is broken into the following sections:</p>
+<p>You can view <a href="https://raw.githubusercontent.com/trinker/random_data/master/random_data_blog2.R">just the R code HERE</a> or <a href="https://github.com/trinker/random_data/blob/master/random_data_blog2.pdf">PDF version HERE</a></p>
+<div id="brief-package-description" class="section level1">
+<h1><span class="header-section-number">1</span> Brief Package Description</h1>
+<p>First we’ll use the <a href="http://cran.r-project.org/web/packages/pacman/index.html"><strong>pacman</strong></a> package to grab the <strong>wakefield</strong> package from GitHub and then load it as well as the handy <strong>dplyr</strong> package.</p>
+<pre class="r"><code>if (!require(&quot;pacman&quot;)) install.packages(&quot;pacman&quot;); library(pacman)
+p_install_gh(&quot;trinker/wakefield&quot;)
+p_load(dplyr, wakefield)</code></pre>
+<p>The main function in <strong>wakefield</strong> is <code>r_data_frame</code>. It takes <code>n</code> (the number of rows) and any number of <em>variable functions</em> that generate random columns. The result is a data frame with named, randomly generated columns. Below is an example, for details see <a href="https://trinkerrstuff.wordpress.com/2015/04/25/random-data-sets-quickly/">Part I</a> or the <a href="https://github.com/trinker/wakefield/blob/master/README.md">README</a></p>
+<pre class="r"><code>set.seed(10)
+
+r_data_frame(n = 30,
+    id,
+    race,
+    age(x = 8:14),
+    Gender = sex,
+    Time = hour,
+    iq,
+    grade, 
+    height(mean=50, sd = 10),
+    died,
+    Scoring = rnorm,
+    Smoker = valid
+)</code></pre>
+<pre><code>## Source: local data frame [30 x 11]
+## 
+##    ID     Race Age Gender     Time  IQ Grade Height  Died    Scoring
+## 1  01    White  11   Male 01:00:00 110  90.7     52 FALSE -1.8227126
+## 2  02    White   8   Male 01:00:00 111  91.8     36  TRUE  0.3525440
+## 3  03    White   9   Male 01:30:00  87  81.3     39 FALSE -1.3484514
+## 4  04 Hispanic  14   Male 01:30:00 111  83.2     46  TRUE  0.7076883
+## 5  05    White  10 Female 03:30:00  95  80.1     51  TRUE -0.4108909
+## 6  06    White  13 Female 04:00:00  97  93.9     61  TRUE -0.4460452
+## 7  07    White  13 Female 05:00:00 109  89.5     44  TRUE -1.0411563
+## 8  08    White  14   Male 06:00:00 101  92.3     63  TRUE -0.3292247
+## 9  09    White  12   Male 06:30:00 110  90.1     52  TRUE -0.2828216
+## 10 10    White  11   Male 09:30:00 107  88.4     47 FALSE  0.4324291
+## .. ..      ... ...    ...      ... ...   ...    ...   ...        ...
+## Variables not shown: Smoker (lgl)</code></pre>
+</div>
+<div id="improvements" class="section level1">
+<h1><span class="header-section-number">2</span> Improvements</h1>
+<div id="repeated-measures-series" class="section level2">
+<h2><span class="header-section-number">2.1</span> Repeated Measures Series</h2>
+<p>Big thanks to <a href="https://github.com/mrdwab">Ananda Mahto</a> for <a href="https://github.com/mrdwab">suggesting</a> better handing of repeated measures series and provided concise code to extend this capability.</p>
+<p>The user may now specify the same <em>variable function</em> multiple times and it is named appropriately:</p>
+<pre class="r"><code>set.seed(10)
+
+r_data_frame(
+    n = 500,
+    id,
+    age, age, age,
+    grade, grade, grade
+)</code></pre>
+<pre><code>## Source: local data frame [500 x 7]
+## 
+##     ID Age_1 Age_2 Age_3 Grade_1 Grade_2 Grade_3
+## 1  001    28    33    32    80.2    87.2    85.6
+## 2  002    24    35    31    89.7    91.7    86.8
+## 3  003    26    33    23    92.7    85.7    88.7
+## 4  004    31    24    28    82.2    90.0    86.0
+## 5  005    21    21    29    86.5    87.0    88.4
+## 6  006    23    28    25    85.6    93.5    86.7
+## 7  007    24    22    26    89.3    90.3    87.6
+## 8  008    24    21    23    92.4    88.3    89.3
+## 9  009    29    23    32    86.4    84.4    88.2
+## 10 010    26    34    32    97.6    84.2    90.6
+## .. ...   ...   ...   ...     ...     ...     ...</code></pre>
+<p>But he went further, recommending a short hand for <code>variable, variable, variable</code>. The <code>r_series</code> function takes a variable function and <code>j</code> number of columns. It can also be renamed with the <code>name</code> argument:</p>
+<pre class="r"><code>set.seed(10)
+
+r_data_frame(n=100,
+    id,
+    age,
+    sex,
+    r_series(gpa, 2),
+    r_series(likert, 3, name = &quot;Question&quot;)
+)</code></pre>
+<pre><code>## Source: local data frame [100 x 8]
+## 
+##     ID Age    Sex GPA_1 GPA_2        Question_1        Question_2
+## 1  001  28   Male  3.00  4.00 Strongly Disagree   Strongly Agree 
+## 2  002  24   Male  3.67  3.67          Disagree           Neutral
+## 3  003  26   Male  3.00  4.00          Disagree Strongly Disagree
+## 4  004  31   Male  3.67  3.67           Neutral   Strongly Agree 
+## 5  005  21 Female  3.00  3.00             Agree   Strongly Agree 
+## 6  006  23 Female  3.67  3.67             Agree             Agree
+## 7  007  24 Female  3.67  4.00          Disagree Strongly Disagree
+## 8  008  24   Male  2.67  3.00   Strongly Agree            Neutral
+## 9  009  29 Female  4.00  3.33           Neutral Strongly Disagree
+## 10 010  26   Male  4.00  3.00          Disagree Strongly Disagree
+## .. ... ...    ...   ...   ...               ...               ...
+## Variables not shown: Question_3 (fctr)</code></pre>
+</div>
+<div id="dummy-coding-expansion-of-factors" class="section level2">
+<h2><span class="header-section-number">2.2</span> Dummy Coding Expansion of Factors</h2>
+<p>It is sometimes nice to expand a factor into j (number of groups) dummy coded columns. Here we see a factor version and then a dummy coded version of the same data frame:</p>
+<pre class="r"><code>set.seed(10)
+
+r_data_frame(n=100,
+    id,
+    age,
+    sex,
+    political
+)</code></pre>
+<pre><code>## Source: local data frame [100 x 4]
+## 
+##     ID Age    Sex    Political
+## 1  001  28   Male Constitution
+## 2  002  24   Male Constitution
+## 3  003  26   Male     Democrat
+## 4  004  31   Male     Democrat
+## 5  005  21 Female Constitution
+## 6  006  23 Female     Democrat
+## 7  007  24 Female     Democrat
+## 8  008  24   Male   Republican
+## 9  009  29 Female Constitution
+## 10 010  26   Male     Democrat
+## .. ... ...    ...          ...</code></pre>
+<p>The dummy coded version…</p>
+<pre class="r"><code>set.seed(10)
+
+r_data_frame(n=100,
+    id,
+    age,
+    r_dummy(sex, prefix = TRUE),
+    r_dummy(political)
+)</code></pre>
+<pre><code>## Source: local data frame [100 x 9]
+## 
+##     ID Age Sex_Male Sex_Female Constitution Democrat Green Libertarian
+## 1  001  28        1          0            1        0     0           0
+## 2  002  24        1          0            1        0     0           0
+## 3  003  26        1          0            0        1     0           0
+## 4  004  31        1          0            0        1     0           0
+## 5  005  21        0          1            1        0     0           0
+## 6  006  23        0          1            0        1     0           0
+## 7  007  24        0          1            0        1     0           0
+## 8  008  24        1          0            0        0     0           0
+## 9  009  29        0          1            1        0     0           0
+## 10 010  26        1          0            0        1     0           0
+## .. ... ...      ...        ...          ...      ...   ...         ...
+## Variables not shown: Republican (int)</code></pre>
+</div>
+<div id="factor-to-numeric-conversion" class="section level2">
+<h2><span class="header-section-number">2.3</span> Factor to Numeric Conversion</h2>
+<p>There are times when you feel like a factor and the when you feel like an integer version. This is particularly useful with Likert-type data and other ordered factors. The <code>as_integer</code> function takes a <code>data.frame</code> and allows the user t specify the indices (<code>j</code>) to convert from factor to numeric. Here I show a factor <code>data.frame</code> and then the integer conversion:</p>
+<pre class="r"><code>set.seed(10)
+
+r_data_frame(5,
+    id, 
+    r_series(likert, j = 4, name = &quot;Item&quot;)
+)</code></pre>
+<pre><code>## Source: local data frame [5 x 5]
+## 
+##   ID          Item_1   Item_2          Item_3            Item_4
+## 1  1         Neutral    Agree        Disagree           Neutral
+## 2  2           Agree    Agree         Neutral   Strongly Agree 
+## 3  3         Neutral    Agree Strongly Agree              Agree
+## 4  4        Disagree Disagree         Neutral             Agree
+## 5  5 Strongly Agree   Neutral           Agree Strongly Disagree</code></pre>
+<p>As integers…</p>
+<pre class="r"><code>set.seed(10)
+
+r_data_frame(5,
+    id, 
+    r_series(likert, j = 4, name = &quot;Item&quot;)
+) %&gt;% 
+    as_integer(-1)</code></pre>
+<pre><code>## Source: local data frame [5 x 5]
+## 
+##   ID Item_1 Item_2 Item_3 Item_4
+## 1  1      3      4      2      3
+## 2  2      4      4      3      5
+## 3  3      3      4      5      4
+## 4  4      2      2      3      4
+## 5  5      5      3      4      1</code></pre>
+</div>
+<div id="viewing-whole-data-set" class="section level2">
+<h2><span class="header-section-number">2.4</span> Viewing Whole Data Set</h2>
+<p><strong>dplyr</strong> has a nice print method that hides excessive rows and columns. Typically this is great behavior. Sometimes you want to quickly see the whole width of the data set. We can use <code>View</code> but this is still wide and shows all columns. The <code>peek</code> function shows minimal rows, truncated columns, and prints wide for quick inspection. This is particularly nice for text strings as data. <strong>dplyr</strong> prints wide data sets like this:</p>
+<pre class="r"><code>r_data_frame(100,
+    id, 
+    name,
+    sex,
+    sentence    
+)</code></pre>
+<pre><code>## Source: local data frame [100 x 4]
+## 
+##     ID     Name    Sex
+## 1  001   Gerald   Male
+## 2  002    Jason   Male
+## 3  003 Mitchell   Male
+## 4  004      Joe Female
+## 5  005   Mickey   Male
+## 6  006   Michal   Male
+## 7  007   Dannie Female
+## 8  008   Jordan   Male
+## 9  009     Rudy Female
+## 10 010   Sammie Female
+## .. ...      ...    ...
+## Variables not shown: Sentence (chr)</code></pre>
+<p>Now use <code>peek</code>:</p>
+<pre class="r"><code>r_data_frame(100,
+    id, 
+    name,
+    sex,
+    sentence    
+) %&gt;% peek</code></pre>
+<pre><code>## Source: local data frame [100 x 4]
+## 
+##     ID    Name    Sex   Sentence
+## 1  001     Jae Female Excuse me.
+## 2  002 Darnell Female Over the l
+## 3  003  Elisha Female First of a
+## 4  004  Vernon Female Gentlemen,
+## 5  005   Scott   Male That&#39;s wha
+## 6  006   Kasey Female We don&#39;t h
+## 7  007 Michael   Male You don&#39;t 
+## 8  008   Cecil Female I&#39;ll get o
+## 9  009    Cruz Female They must 
+## 10 010  Travis Female Good night
+## .. ...     ...    ...        ...</code></pre>
+</div>
+<div id="visualizing-column-types-and-nas" class="section level2">
+<h2><span class="header-section-number">2.5</span> Visualizing Column Types and NAs</h2>
+<p>When we build a large random data set it is nice to get a sense of the column types and the missing values. The <code>table_heat</code> (also <code>plot</code> for <code>tbl_df</code> class) does this. Here I’ll generate a data set, add missing values (<code>r_na</code>), and then plot:</p>
+<pre class="r"><code>set.seed(10)
+
+r_data_frame(n=100,
+    id,
+    dob,
+    animal,
+    grade, grade,
+    death,
+    dummy,
+    grade_letter,
+    gender,
+    paragraph,
+    sentence
+) %&gt;%
+   r_na() %&gt;%
+   plot(palette = &quot;Set1&quot;)</code></pre>
+<p><img src="random_data_blog2_files/figure-html/unnamed-chunk-13-1.png" title="" alt="" width="1056" /></p>
+</div>
+</div>
+<div id="table-of-variable-functions" class="section level1">
+<h1><span class="header-section-number">3</span> Table of Variable Functions</h1>
+<p>There are currently 66 <strong>wakefield</strong> based <em>variable functions</em> to chose for building columns. Use <code>variables()</code> to see them or <code>variables(TRUE)</code> to see a list of them broken into variable types. Here’s an HTML table version:</p>
+<!-- html table generated in R 3.2.0 by xtable 1.7-4 package -->
+<!-- Wed Apr 29 22:08:51 2015 -->
+<table>
+<tr>
+<td>
+age
+</td>
+<td>
+dob
+</td>
+<td>
+height_in
+</td>
+<td>
+month
+</td>
+<td>
+speed
+</td>
+</tr>
+<tr>
+<td>
+animal
+</td>
+<td>
+dummy
+</td>
+<td>
+income
+</td>
+<td>
+name
+</td>
+<td>
+speed_kph
+</td>
+</tr>
+<tr>
+<td>
+answer
+</td>
+<td>
+education
+</td>
+<td>
+internet_browser
+</td>
+<td>
+normal
+</td>
+<td>
+speed_mph
+</td>
+</tr>
+<tr>
+<td>
+area
+</td>
+<td>
+employment
+</td>
+<td>
+iq
+</td>
+<td>
+normal_round
+</td>
+<td>
+state
+</td>
+</tr>
+<tr>
+<td>
+birth
+</td>
+<td>
+eye
+</td>
+<td>
+language
+</td>
+<td>
+paragraph
+</td>
+<td>
+string
+</td>
+</tr>
+<tr>
+<td>
+car
+</td>
+<td>
+gender
+</td>
+<td>
+level
+</td>
+<td>
+pet
+</td>
+<td>
+upper
+</td>
+</tr>
+<tr>
+<td>
+children
+</td>
+<td>
+gpa
+</td>
+<td>
+likert
+</td>
+<td>
+political
+</td>
+<td>
+upper_factor
+</td>
+</tr>
+<tr>
+<td>
+coin
+</td>
+<td>
+grade
+</td>
+<td>
+likert_5
+</td>
+<td>
+primary
+</td>
+<td>
+valid
+</td>
+</tr>
+<tr>
+<td>
+color
+</td>
+<td>
+grade_letter
+</td>
+<td>
+likert_7
+</td>
+<td>
+race
+</td>
+<td>
+year
+</td>
+</tr>
+<tr>
+<td>
+date_stamp
+</td>
+<td>
+grade_level
+</td>
+<td>
+lorem_ipsum
+</td>
+<td>
+religion
+</td>
+<td>
+zip_code
+</td>
+</tr>
+<tr>
+<td>
+death
+</td>
+<td>
+group
+</td>
+<td>
+lower
+</td>
+<td>
+sat
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+dice
+</td>
+<td>
+hair
+</td>
+<td>
+lower_factor
+</td>
+<td>
+sentence
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+died
+</td>
+<td>
+height
+</td>
+<td>
+marital
+</td>
+<td>
+sex
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+dna
+</td>
+<td>
+height_cm
+</td>
+<td>
+military
+</td>
+<td>
+smokes
+</td>
+<td>
+</td>
+</tr>
+</table>
+<p></p>
+</div>
+<div id="possible-uses" class="section level1">
+<h1><span class="header-section-number">4</span> Possible Uses</h1>
+<div id="testing-methods" class="section level2">
+<h2><span class="header-section-number">4.1</span> Testing Methods</h2>
+<p>I personally will use this most frequently when I’m testing out a model. For example say you wanted to test psychometric functions, including the <code>cor</code> function, on a randomly generated assessment:</p>
+<pre class="r"><code>dat &lt;- r_data_frame(120,
+    id, 
+    sex,
+    age,
+    r_series(likert, 15, name = &quot;Item&quot;)
+) %&gt;% 
+    as_integer(-c(1:3))
+
+dat %&gt;%
+    select(contains(&quot;Item&quot;)) %&gt;%
+    cor %&gt;%
+    heatmap</code></pre>
+<p><img src="random_data_blog2_files/figure-html/unnamed-chunk-15-1.png" title="" alt="" width="672" /></p>
+</div>
+<div id="unique-student-data-for-course-assignments" class="section level2">
+<h2><span class="header-section-number">4.2</span> Unique Student Data for Course Assignments</h2>
+<p>Sometimes it’s nice if students each have their own data set to work with but one in which you control the parameters. Simply supply the students with a unique integer id and they can use this inside of <code>set.seed</code> with a <strong>wakefield</strong> <code>r_data_frame</code> you’ve constructed for them in advance. Viola 25 instant data sets that are structurally the same but randomly different.</p>
+<pre class="r"><code>student_id &lt;- ## INSERT YOUT ID HERE
+    
+set.seed(student_id)
+
+dat &lt;- function(1000,
+    id, 
+    gender,
+    religion,
+    internet_browser,
+    language,
+    iq,
+    sat,
+    smokes
+)    </code></pre>
+</div>
+<div id="blogging-and-online-help-communities" class="section level2">
+<h2><span class="header-section-number">4.3</span> Blogging and Online Help Communities</h2>
+<p><strong>wakefield</strong> can make data sharing on blog posts and online hep communities (e.g., <a href="http://www.talkstats.com/">TalkStats</a>, <a href="http://stackoverflow.com/questions/tagged/r">StackOverflow</a>) fast, accessible, and with little space or cognitive effort. Use <code>variables(TRUE)</code> to see <em>variable functions</em> by class and select the ones you want:</p>
+<pre class="r"><code>variables(TRUE)</code></pre>
+<pre><code>## $character
+## [1] &quot;lorem_ipsum&quot; &quot;lower&quot;       &quot;name&quot;        &quot;paragraph&quot;   &quot;sentence&quot;   
+## [6] &quot;string&quot;      &quot;upper&quot;       &quot;zip_code&quot;   
+## 
+## $date
+## [1] &quot;birth&quot;      &quot;date_stamp&quot; &quot;dob&quot;       
+## 
+## $factor
+##  [1] &quot;animal&quot;           &quot;answer&quot;           &quot;area&quot;            
+##  [4] &quot;car&quot;              &quot;coin&quot;             &quot;color&quot;           
+##  [7] &quot;dna&quot;              &quot;education&quot;        &quot;employment&quot;      
+## [10] &quot;eye&quot;              &quot;gender&quot;           &quot;grade_level&quot;     
+## [13] &quot;group&quot;            &quot;hair&quot;             &quot;internet_browser&quot;
+## [16] &quot;language&quot;         &quot;lower_factor&quot;     &quot;marital&quot;         
+## [19] &quot;military&quot;         &quot;month&quot;            &quot;pet&quot;             
+## [22] &quot;political&quot;        &quot;primary&quot;          &quot;race&quot;            
+## [25] &quot;religion&quot;         &quot;sex&quot;              &quot;state&quot;           
+## [28] &quot;upper_factor&quot;    
+## 
+## $integer
+## [1] &quot;age&quot;      &quot;children&quot; &quot;dice&quot;     &quot;level&quot;    &quot;year&quot;    
+## 
+## $logical
+## [1] &quot;death&quot;  &quot;died&quot;   &quot;smokes&quot; &quot;valid&quot; 
+## 
+## $numeric
+##  [1] &quot;dummy&quot;        &quot;gpa&quot;          &quot;grade&quot;        &quot;height&quot;      
+##  [5] &quot;height_cm&quot;    &quot;height_in&quot;    &quot;income&quot;       &quot;iq&quot;          
+##  [9] &quot;normal&quot;       &quot;normal_round&quot; &quot;sat&quot;          &quot;speed&quot;       
+## [13] &quot;speed_kph&quot;    &quot;speed_mph&quot;   
+## 
+## $`ordered factor`
+## [1] &quot;grade_letter&quot; &quot;likert&quot;       &quot;likert_5&quot;     &quot;likert_7&quot;</code></pre>
+<p>Then throw the inside of <code>r_data_fame</code> to make a quick data set to share.</p>
+<pre class="r"><code>r_data_frame(8,
+    name,
+    sex,
+    r_series(iq, 3)
+) %&gt;%
+    peek %&gt;%
+    dput</code></pre>
+</div>
+</div>
+<div id="getting-involved" class="section level1">
+<h1><span class="header-section-number">5</span> Getting Involved</h1>
+<p>If you’re interested in getting involved with use or contributing you can:</p>
+<ol style="list-style-type: decimal">
+<li>Install and use <a href="https://github.com/trinker/wakefield"><strong>wakefield</strong></a><br /></li>
+<li>Provide feedback via comments below<br /></li>
+<li>Provide feedback (bugs, improvements, and feature requests) via <a href="https://github.com/trinker/wakefield/issues">wakefield’s Issues Page</a><br /></li>
+<li>Fork from <a href="https://github.com/trinker/wakefield">GitHub</a> and give a Pull Request</li>
+</ol>
+<p>Thanks for reading, your feedback is welcomed.</p>
+<hr />
+<p>*<em>Get the R code for this post</em> <a href="https://raw.githubusercontent.com/trinker/random_data/master/random_data_blog2.R"><em>HERE</em></a><br />*<em>Get a PDF version this post</em> <a href="https://github.com/trinker/random_data/blob/master/random_data_blog2.pdf"><em>HERE</em></a></p>
+</div>
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

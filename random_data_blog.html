@@ -61,7 +61,7 @@ img {
 
 <div id="header">
 <h1 class="title">Random Data Set</h1>
-<h4 class="date"><em>24 April, 2015</em></h4>
+<h4 class="date"><em>29 April, 2015</em></h4>
 </div>
 
 <div id="TOC">
@@ -120,8 +120,9 @@ p_load_gh(&quot;trinker/wakefield&quot;)</code></pre>
 <pre class="r"><code>gpa(10)</code></pre>
 <pre><code>##  [1] 3.00 3.67 2.67 3.33 3.00 4.00 3.00 3.00 3.67 3.00</code></pre>
 <pre class="r"><code>dna(10)</code></pre>
-<pre><code>##  [1] &quot;Adenine&quot;  &quot;Thymine&quot;  &quot;Thymine&quot;  &quot;Thymine&quot;  &quot;Adenine&quot;  &quot;Cytosine&quot;
-##  [7] &quot;Guanine&quot;  &quot;Thymine&quot;  &quot;Thymine&quot;  &quot;Guanine&quot;</code></pre>
+<pre><code>##  [1] Adenine  Thymine  Thymine  Thymine  Adenine  Cytosine Guanine 
+##  [8] Thymine  Thymine  Guanine 
+## Levels: Guanine Adenine Thymine Cytosine</code></pre>
 <pre class="r"><code>string(10, length = 5)</code></pre>
 <pre><code>##  [1] &quot;L3MPu&quot; &quot;tyTgQ&quot; &quot;mqBWh&quot; &quot;uGnch&quot; &quot;6KKZC&quot; &quot;DdLrw&quot; &quot;t2lEJ&quot; &quot;Hir6Y&quot;
 ##  [9] &quot;eE4v9&quot; &quot;oPb4u&quot;</code></pre>
@@ -147,16 +148,16 @@ r_data_frame(
 <pre><code>## Source: local data frame [500 x 10]
 ## 
 ##     ID     Race Age Smokes       Marital    Start      End  IQ Height
-## 1  001    White  33  FALSE       Married 00:00:00 00:00:00  95     62
-## 2  002    White  35  FALSE Never Married 00:00:00 00:00:00  94     69
-## 3  003    White  33  FALSE     Separated 00:00:00 00:00:00 112     71
-## 4  004 Hispanic  24  FALSE       Married 00:00:00 00:00:00  97     65
-## 5  005    White  21  FALSE Never Married 00:00:00 00:00:00  89     74
-## 6  006    White  28  FALSE       Married 00:00:00 00:00:00  93     67
-## 7  007    White  22  FALSE       Married 00:00:00 00:00:00 113     66
-## 8  008    White  21  FALSE Never Married 00:00:00 00:00:00 115     69
-## 9  009    White  23  FALSE      Divorced 00:00:00 00:00:00  85     74
-## 10 010    White  34  FALSE      Divorced 00:00:00 00:00:00 110     71
+## 1  001    White  33  FALSE       Married 00:00:00 00:00:00 111     74
+## 2  002    White  35  FALSE Never Married 00:00:00 00:00:00  96     66
+## 3  003    White  33  FALSE     Separated 00:00:00 00:00:00 110     65
+## 4  004 Hispanic  24  FALSE       Married 00:00:00 00:00:00  91     71
+## 5  005    White  21  FALSE Never Married 00:00:00 00:00:00 116     63
+## 6  006    White  28  FALSE       Married 00:00:00 00:00:00 104     60
+## 7  007    White  22  FALSE       Married 00:00:00 00:00:00  92     74
+## 8  008    White  21  FALSE Never Married 00:00:00 00:00:00 109     70
+## 9  009    White  23  FALSE      Divorced 00:00:00 00:00:00 107     68
+## 10 010    White  34  FALSE      Divorced 00:00:00 00:00:00 104     69
 ## .. ...      ... ...    ...           ...      ...      ... ...    ...
 ## Variables not shown: Died (lgl)</code></pre>
 <p>This <code>r_data_frame</code> is pretty awesome and not my own. Josh O’Brien wrote the function as seen <a href="http://stackoverflow.com/a/29617983/1000343">HERE</a>. Pretty nifty trick. Josh thank you for your help with bringing to fruition the concept.</p>
@@ -185,16 +186,16 @@ r_data_frame(
 <pre><code>## Source: local data frame [30 x 11]
 ## 
 ##    ID      State     Month  SAT   Minute  IQ   Zip Year     Scoring Smoker
-## 1  01    Georgia      July 1315 00:03:00 106    NA   NA          NA     NA
-## 2  02    Florida  February 1492 00:04:00 107 87108 2007  0.64350004   TRUE
-## 3  03       Ohio     March 1597     &lt;NA&gt;  83 58653 2012 -1.36030614   TRUE
-## 4  04         NA  November 1518 00:07:00  NA 50381 1999 -0.19850611   TRUE
-## 5  05 California      June 1362 00:08:00 111 58123 1996          NA  FALSE
-## 6  06   New York September 1356     &lt;NA&gt;  87 18479 2010  2.06820961   TRUE
-## 7  07         NA        NA   NA     &lt;NA&gt; 111 97135 2007 -0.30528475  FALSE
-## 8  08    Florida  December 1324 00:15:00  NA 99438 2010  0.28124561   TRUE
-## 9  09 Washington        NA 1468 00:16:00  97 97135 1996          NA   TRUE
-## 10 10       Ohio      July   NA 00:20:00  NA 58123 2014  0.04636144     NA
+## 1  01         NA      July 1315 00:01:00  90 53057 2009 -0.32922472   TRUE
+## 2  02    Florida  February 1492 00:03:00  NA 17564 2009 -0.28282162   TRUE
+## 3  03       Ohio     March 1597 00:06:00 107 56659 2012          NA   TRUE
+## 4  04         NA        NA   NA 00:06:00 107 56659 2007          NA     NA
+## 5  05 California      June 1362 00:08:00  NA    NA 1997 -0.05663631  FALSE
+## 6  06   New York September 1356 00:10:00  83 64964 1995  0.73351542   TRUE
+## 7  07    Florida        NA 1536     &lt;NA&gt;  88    NA 2003  0.09731162  FALSE
+## 8  08    Florida  December 1324 00:14:00  NA    NA 1998  1.63089174  FALSE
+## 9  09 Washington September   NA 00:17:00 115 98262   NA  0.56061070  FALSE
+## 10 10         NA        NA 1435 00:18:00 104 44205   NA  1.32956476   TRUE
 ## .. ..        ...       ...  ...      ... ...   ...  ...         ...    ...
 ## Variables not shown: Sentence (chr)</code></pre>
 </div>
@@ -207,16 +208,16 @@ r_data(1000)</code></pre>
 <pre><code>## Source: local data frame [1,000 x 8]
 ## 
 ##      ID     Race Age    Sex     Hour  IQ Height  Died
-## 1  0001    White  32 Female 00:00:00  91     63 FALSE
-## 2  0002    White  31   Male 00:00:00  92     69  TRUE
-## 3  0003    White  23 Female 00:00:00  94     67 FALSE
-## 4  0004 Hispanic  28 Female 00:00:00 102     63 FALSE
-## 5  0005    White  29 Female 00:00:00 103     74  TRUE
-## 6  0006    White  25   Male 00:00:00  96     68  TRUE
-## 7  0007    White  26 Female 00:00:00 115     70 FALSE
-## 8  0008    White  23   Male 00:00:00 119     66  TRUE
-## 9  0009    White  32   Male 00:00:00 107     74  TRUE
-## 10 0010    White  32   Male 00:00:00 104     71  TRUE
+## 1  0001    White  32 Female 00:00:00  82     62  TRUE
+## 2  0002    White  31   Male 00:00:00 100     67 FALSE
+## 3  0003    White  23 Female 00:00:00 105     71  TRUE
+## 4  0004 Hispanic  28 Female 00:00:00  90     73  TRUE
+## 5  0005    White  29 Female 00:00:00 115     73  TRUE
+## 6  0006    White  25   Male 00:00:00  94     67 FALSE
+## 7  0007    White  26 Female 00:00:00  93     79 FALSE
+## 8  0008    White  23   Male 00:00:00 100     69 FALSE
+## 9  0009    White  32   Male 00:00:00 114     65 FALSE
+## 10 0010    White  32   Male 00:00:00 105     71  TRUE
 ## ..  ...      ... ...    ...      ... ...    ...   ...</code></pre>
 </div>
 </div>

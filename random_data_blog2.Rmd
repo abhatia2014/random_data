@@ -1,0 +1,307 @@
+---
+title: "Wakefield: Random Data Set (Part II)"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document:
+    toc: true
+    theme: journal
+    number_sections: true
+    self_contained: false
+  pdf_document:
+    toc: true
+    number_sections: true  
+---
+
+```{r, echo=FALSE}
+out_type <- knitr::opts_knit$get("rmarkdown.pandoc.to")
+```
+
+This post is part II of a series detailing the GitHub package, [**wakefield**](https://github.com/trinker/wakefield), for generating random data sets.  The [First Post (part I)](https://trinkerrstuff.wordpress.com/2015/04/25/random-data-sets-quickly/) was a test run to gauge user interest.  I received positive feedback and some ideas for improvements, which I'll share below.
+
+<img src="http://raw.githubusercontent.com/trinker/wakefield/master/inst/wakefield_logo/r_wakefield.png" width = "250"/>
+
+The post is broken into the following sections:
+
+
+You can view <a href="https://raw.githubusercontent.com/trinker/random_data/master/random_data_blog2.R">just the R code HERE</a> or <a href="https://github.com/trinker/random_data/blob/master/random_data_blog2.pdf">PDF version HERE</a>
+
+# Brief Package Description
+
+First we'll use the [**pacman**](http://cran.r-project.org/web/packages/pacman/index.html) package to grab the **wakefield** package from GitHub and then load it as well as the handy **dplyr** package. 
+
+```{r, echo=FALSE}
+if (!require("pacman")) install.packages("pacman"); library(pacman)
+p_load(dplyr, wakefield)
+```
+
+```{r, eval=FALSE}
+if (!require("pacman")) install.packages("pacman"); library(pacman)
+p_install_gh("trinker/wakefield")
+p_load(dplyr, wakefield)
+```
+
+The main function in **wakefield** is  `r_data_frame`.  It takes `n` (the number of rows) and any number of *variable functions* that generate random columns.  The result is a data frame with named, randomly generated columns.  Below is an example, for details see [Part I](https://trinkerrstuff.wordpress.com/2015/04/25/random-data-sets-quickly/) or the [README](https://github.com/trinker/wakefield/blob/master/README.md)
+
+```{r}
+set.seed(10)
+
+r_data_frame(n = 30,
+    id,
+    race,
+    age(x = 8:14),
+    Gender = sex,
+    Time = hour,
+    iq,
+    grade, 
+    height(mean=50, sd = 10),
+    died,
+    Scoring = rnorm,
+    Smoker = valid
+)
+```
+
+# Improvements 
+
+## Repeated Measures Series     
+
+Big thanks to [Ananda Mahto](https://github.com/mrdwab) for [suggesting](https://github.com/mrdwab) better handing of repeated measures series and provided concise code to extend this capability.
+
+The user may now specify the same *variable function* multiple times and it is named appropriately:
+
+```{r}
+set.seed(10)
+
+r_data_frame(
+    n = 500,
+    id,
+    age, age, age,
+    grade, grade, grade
+)
+```
+
+
+But he went further, recommending a short hand for `variable, variable, variable`.  The `r_series` function takes a variable function and `j` number of columns.  It can also be renamed with the `name` argument:
+
+```{r}
+set.seed(10)
+
+r_data_frame(n=100,
+    id,
+    age,
+    sex,
+    r_series(gpa, 2),
+    r_series(likert, 3, name = "Question")
+)
+```
+
+## Dummy Coding Expansion of Factors    
+
+It is sometimes nice to expand a factor into j (number of groups) dummy coded columns.  Here we see a factor version and then a dummy coded version of the same data frame:
+
+```{r}
+set.seed(10)
+
+r_data_frame(n=100,
+    id,
+    age,
+    sex,
+    political
+)
+```
+
+The dummy coded version...
+
+```{r}
+set.seed(10)
+
+r_data_frame(n=100,
+    id,
+    age,
+    r_dummy(sex, prefix = TRUE),
+    r_dummy(political)
+)
+```
+
+## Factor to Numeric Conversion
+
+There are times when you feel like a factor and the when you feel like an integer version.  This is particularly useful with Likert-type data and other ordered factors.  The `as_integer` function takes a `data.frame` and allows the user t specify the indices (`j`) to convert from factor to numeric.  Here I show a factor `data.frame` and then the integer conversion:
+
+```{r}
+set.seed(10)
+
+r_data_frame(5,
+    id, 
+    r_series(likert, j = 4, name = "Item")
+)
+```
+
+As integers...
+
+```{r}
+set.seed(10)
+
+r_data_frame(5,
+    id, 
+    r_series(likert, j = 4, name = "Item")
+) %>% 
+    as_integer(-1)
+```
+
+## Viewing Whole Data Set 
+
+**dplyr** has a nice print method that hides excessive rows and columns.  Typically this is great behavior.  Sometimes you want to quickly see the whole width of the data set.  We can use `View` but this is still wide and shows all columns.  The `peek` function shows minimal rows, truncated columns, and prints wide for quick inspection.  This is particularly nice for text strings as data.  **dplyr** prints wide data sets like this:
+
+```{r}
+r_data_frame(100,
+    id, 
+    name,
+    sex,
+    sentence    
+)
+```
+
+Now use `peek`:
+
+```{r}
+r_data_frame(100,
+    id, 
+    name,
+    sex,
+    sentence    
+) %>% peek
+```
+
+## Visualizing Column Types and NAs   
+
+When we build a large random data set it is nice to get a sense of the column types and the missing values.  The `table_heat` (also `plot` for `tbl_df` class) does this.  Here I'll generate a data set, add missing values (`r_na`), and then plot:
+
+```{r, fig.height=7, fig.width=11}
+set.seed(10)
+
+r_data_frame(n=100,
+    id,
+    dob,
+    animal,
+    grade, grade,
+    death,
+    dummy,
+    grade_letter,
+    gender,
+    paragraph,
+    sentence
+) %>%
+   r_na() %>%
+   plot(palette = "Set1")
+```
+
+
+# Table of Variable Functions 
+
+There are currently `r length(variables())` **wakefield** based *variable functions* to chose for building columns. Use `variables()` to see them or `variables(TRUE)` to see a list of them broken into variable types.  Here's an HTML table version:
+
+
+```{r, results='asis', echo=FALSE, comment=NA, warning=FALSE, htmlcap="Available Variable Functions"}
+p_load(pander, xtable)
+
+switch(out_type,
+    html = {variables("matrix", ncol=5) %>%
+                xtable() %>%
+                print(type = 'html', include.colnames = FALSE, include.rownames = FALSE,
+                html.table.attributes = '')
+           },
+    latex = {variables("matrix", ncol=6) %>%
+                xtable() %>%
+                print(include.colnames = FALSE, include.rownames = FALSE, table.placement="!h")
+            }
+)
+#matrix(c(sprintf("`%s`", vect), blanks), ncol=4) %>%
+#    pandoc.table(format = "markdown", caption = "Available variable functions.")
+```
+
+\clearpage
+
+# Possible Uses  
+
+## Testing Methods 
+
+I personally will use this most frequently when I'm testing out a model.  For example say you wanted to test psychometric functions, including the `cor` function, on a randomly generated assessment:
+
+```{r}
+dat <- r_data_frame(120,
+    id, 
+    sex,
+    age,
+    r_series(likert, 15, name = "Item")
+) %>% 
+    as_integer(-c(1:3))
+
+dat %>%
+    select(contains("Item")) %>%
+    cor %>%
+    heatmap
+```
+
+## Unique Student Data for Course Assignments 
+
+Sometimes it's nice if students each have their own data set to work with but one in which you control the parameters.  Simply supply the students with a unique integer id and they can use this inside of `set.seed` with a **wakefield** `r_data_frame` you've constructed for them in advance.  Viola 25 instant data sets that are structurally the same but randomly different.
+
+```{r eval=FALSE}
+student_id <- ## INSERT YOUT ID HERE
+    
+set.seed(student_id)
+
+dat <- function(1000,
+    id, 
+    gender,
+    religion,
+    internet_browser,
+    language,
+    iq,
+    sat,
+    smokes
+)    
+```
+
+## Blogging and Online Help Communities
+
+**wakefield** can make data sharing on blog posts and online hep communities (e.g., [TalkStats](http://www.talkstats.com/), [StackOverflow](http://stackoverflow.com/questions/tagged/r)) fast, accessible, and with little space or cognitive effort.  Use `variables(TRUE)` to see *variable functions* by class and select the ones you want:
+
+```{r}
+variables(TRUE)
+```
+
+Then throw the inside of `r_data_fame` to make a quick data set to share.
+
+```{r, eval=FALSE}
+r_data_frame(8,
+    name,
+    sex,
+    r_series(iq, 3)
+) %>%
+    peek %>%
+    dput
+```
+
+# Getting Involved
+
+If you're interested in getting involved with use or contributing you can:
+
+1. Install and use [**wakefield**](https://github.com/trinker/wakefield)    
+2. Provide feedback via comments below    
+3. Provide feedback (bugs, improvements, and feature requests) via [wakefield's Issues Page](https://github.com/trinker/wakefield/issues)   
+4. Fork from [GitHub](https://github.com/trinker/wakefield) and give a Pull Request    
+
+Thanks for reading, your feedback is welcomed.
+
+---
+
+\**Get the R code for this post* [*HERE*](https://raw.githubusercontent.com/trinker/random_data/master/random_data_blog2.R)    
+\**Get a PDF version this post* [*HERE*](https://github.com/trinker/random_data/blob/master/random_data_blog2.pdf)
+
+
+
+
+
+
+
+
