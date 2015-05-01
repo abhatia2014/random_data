@@ -63,7 +63,7 @@ img {
 
 <div id="header">
 <h1 class="title">Wakefield: Random Data Set (Part II)</h1>
-<h4 class="date"><em>29 April, 2015</em></h4>
+<h4 class="date"><em>01 May, 2015</em></h4>
 </div>
 
 <div id="TOC">
@@ -336,9 +336,9 @@ r_data_frame(n=100,
 </div>
 <div id="table-of-variable-functions" class="section level1">
 <h1><span class="header-section-number">3</span> Table of Variable Functions</h1>
-<p>There are currently 66 <strong>wakefield</strong> based <em>variable functions</em> to chose for building columns. Use <code>variables()</code> to see them or <code>variables(TRUE)</code> to see a list of them broken into variable types. Here’s an HTML table version:</p>
+<p>There are currently 68 <strong>wakefield</strong> based <em>variable functions</em> to chose for building columns. Use <code>variables()</code> to see them or <code>variables(TRUE)</code> to see a list of them broken into variable types. Here’s an HTML table version:</p>
 <!-- html table generated in R 3.2.0 by xtable 1.7-4 package -->
-<!-- Wed Apr 29 22:51:04 2015 -->
+<!-- Fri May 01 18:19:18 2015 -->
 <table>
 <tr>
 <td>
@@ -348,13 +348,13 @@ age
 dob
 </td>
 <td>
-height_in
+height_cm
 </td>
 <td>
-month
+math
 </td>
 <td>
-speed
+sex
 </td>
 </tr>
 <tr>
@@ -365,13 +365,13 @@ animal
 dummy
 </td>
 <td>
-income
+height_in
 </td>
 <td>
-name
+military
 </td>
 <td>
-speed_kph
+smokes
 </td>
 </tr>
 <tr>
@@ -382,7 +382,41 @@ answer
 education
 </td>
 <td>
+income
+</td>
+<td>
+month
+</td>
+<td>
+speed
+</td>
+</tr>
+<tr>
+<td>
+area
+</td>
+<td>
+ela
+</td>
+<td>
 internet_browser
+</td>
+<td>
+name
+</td>
+<td>
+speed_kph
+</td>
+</tr>
+<tr>
+<td>
+birth
+</td>
+<td>
+employment
+</td>
+<td>
+iq
 </td>
 <td>
 normal
@@ -393,13 +427,13 @@ speed_mph
 </tr>
 <tr>
 <td>
-area
+car
 </td>
 <td>
-employment
+eye
 </td>
 <td>
-iq
+language
 </td>
 <td>
 normal_round
@@ -410,13 +444,13 @@ state
 </tr>
 <tr>
 <td>
-birth
+children
 </td>
 <td>
-eye
+gender
 </td>
 <td>
-language
+level
 </td>
 <td>
 paragraph
@@ -427,13 +461,13 @@ string
 </tr>
 <tr>
 <td>
-car
+coin
 </td>
 <td>
-gender
+gpa
 </td>
 <td>
-level
+likert
 </td>
 <td>
 pet
@@ -444,13 +478,13 @@ upper
 </tr>
 <tr>
 <td>
-children
+color
 </td>
 <td>
-gpa
+grade
 </td>
 <td>
-likert
+likert_5
 </td>
 <td>
 political
@@ -461,13 +495,13 @@ upper_factor
 </tr>
 <tr>
 <td>
-coin
+date_stamp
 </td>
 <td>
-grade
+grade_letter
 </td>
 <td>
-likert_5
+likert_7
 </td>
 <td>
 primary
@@ -478,13 +512,13 @@ valid
 </tr>
 <tr>
 <td>
-color
+death
 </td>
 <td>
-grade_letter
+grade_level
 </td>
 <td>
-likert_7
+lorem_ipsum
 </td>
 <td>
 race
@@ -495,13 +529,13 @@ year
 </tr>
 <tr>
 <td>
-date_stamp
+dice
 </td>
 <td>
-grade_level
+group
 </td>
 <td>
-lorem_ipsum
+lower
 </td>
 <td>
 religion
@@ -512,13 +546,13 @@ zip_code
 </tr>
 <tr>
 <td>
-death
+died
 </td>
 <td>
-group
+hair
 </td>
 <td>
-lower
+lower_factor
 </td>
 <td>
 sat
@@ -528,23 +562,7 @@ sat
 </tr>
 <tr>
 <td>
-dice
-</td>
-<td>
-hair
-</td>
-<td>
-lower_factor
-</td>
-<td>
-sentence
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-died
+dna
 </td>
 <td>
 height
@@ -553,23 +571,7 @@ height
 marital
 </td>
 <td>
-sex
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-dna
-</td>
-<td>
-height_cm
-</td>
-<td>
-military
-</td>
-<td>
-smokes
+sentence
 </td>
 <td>
 </td>
@@ -638,7 +640,8 @@ dat &lt;- function(1000,
 ## [28] &quot;upper_factor&quot;    
 ## 
 ## $integer
-## [1] &quot;age&quot;      &quot;children&quot; &quot;dice&quot;     &quot;level&quot;    &quot;year&quot;    
+## [1] &quot;age&quot;      &quot;children&quot; &quot;dice&quot;     &quot;ela&quot;      &quot;level&quot;    &quot;math&quot;    
+## [7] &quot;year&quot;    
 ## 
 ## $logical
 ## [1] &quot;death&quot;  &quot;died&quot;   &quot;smokes&quot; &quot;valid&quot; 

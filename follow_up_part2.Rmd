@@ -1,0 +1,109 @@
+---
+title: "Follow Up: Wakefield: Random Data Set (Part II)"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document:
+    theme: journal
+    number_sections: true
+---
+
+Ulf suggested related data sets in this comment: http://goo.gl/H1RKsV.  I have added the `relate` function as well as a `relate` argument to `r_series` in version 0.2.0 of **wakefield**.  Here is a demonstration of some of the capabilities:
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+if (!require("pacman")) install.packages("pacman"); library(pacman)
+p_load(dplyr, wakefield, tidyr, ggplot2)
+```
+
+First install the newst version of **wakefield**:
+
+```{r, eval=FALSE}
+if (!require("pacman")) install.packages("pacman"); library(pacman)
+p_install_gh("trinker/wakefield")
+p_load(dplyr, wakefield, tidyr, ggplot2)
+```
+
+
+# relate Argument
+
+The `relate` has been added to `r_series`.  It allows the user to specify the relationship between columns.  May be be a named list of \code{c("operation", "mean", "sd")} or a short hand string of the form of `"fM_sd"` where:
+
+- `f` is one of (+, -, *, /)
+- `M` is a mean value
+- `sd` is a standard deviation of the mean value 
+
+For example you may use `relate = "*4_1"`.  If `relate = NULL` no relationship is generated between columns.  I will use the short hand string form here.
+
+# Adjust Correlations
+
+Use the `sd` command to adjust correlations.
+
+```{r}
+round(cor(r_series(grade, 8, 10, relate = "+1_2")), 2)
+round(cor(r_series(grade, 8, 10, relate = "+1_0")), 2)
+round(cor(r_series(grade, 8, 10, relate = "+1_20")), 2)
+round(cor(r_series(grade, 8, 10, relate = "+15_20")), 2)
+```
+
+# Visualize the relationship:
+## Example 1
+
+```{r}
+dat <- r_data_frame(12,
+    name,
+    r_series(grade, 100, relate = "+1_6")
+) 
+
+dat %>%
+    gather(Time, Grade, -c(Name)) %>%
+    mutate(Time = as.numeric(gsub("\\D", "", Time))) %>%
+    ggplot(aes(x = Time, y = Grade, color = Name, group = Name)) +
+        geom_line(size=.8) + 
+        theme_bw()
+```
+
+## Exmple 2
+```{r}
+dat <- r_data_frame(12,
+    name,
+    r_series(grade, 100, relate = "-10_20")
+) 
+
+dat %>%
+    gather(Time, Grade, -c(Name)) %>%
+    mutate(Time = as.numeric(gsub("\\D", "", Time))) %>%
+    ggplot(aes(x = Time, y = Grade, color = Name, group = Name)) +
+        geom_line(size=.8) + 
+        theme_bw()
+```
+    
+    
+## Exmple 3
+```{r}
+dat <- r_data_frame(12,
+    name,
+    r_series(grade, 100, relate = "*1.05_.01")
+) 
+
+dat %>%
+    gather(Time, Grade, -c(Name)) %>%
+    mutate(Time = as.numeric(gsub("\\D", "", Time))) %>%
+    ggplot(aes(x = Time, y = Grade, color = Name, group = Name)) +
+        geom_line(size=.8) + 
+        theme_bw()
+```
+
+## Exmple 4
+```{r}
+dat <- r_data_frame(12,
+    name,
+    r_series(grade, 100, relate = "/1.5_.5")
+) 
+
+dat %>%
+    gather(Time, Grade, -c(Name)) %>%
+    mutate(Time = as.numeric(gsub("\\D", "", Time))) %>%
+    ggplot(aes(x = Time, y = Grade, color = Name, group = Name)) +
+        geom_line(size=.8) + 
+        theme_bw()
+```
+
