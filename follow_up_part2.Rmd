@@ -6,7 +6,7 @@ output:
     theme: journal
     number_sections: true
   md_document:
-    toc: true
+    variant: markdown_github 
 ---
 
 Ulf suggested related data sets in this comment: http://goo.gl/H1RKsV.  I have added the `relate` function as well as a `relate` argument to `r_series` in version 0.2.0 of **wakefield**.  Here is a demonstration of some of the capabilities:
