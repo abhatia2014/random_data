@@ -35,6 +35,15 @@ The `relate` has been added to `r_series`.  It allows the user to specify the re
 
 For example you may use `relate = "*4_1"`.  If `relate = NULL` no relationship is generated between columns.  I will use the short hand string form here.
 
+# Some Examples With Variation
+
+```{r}
+r_series(grade, j = 5, n = 100, relate = "+1_6")
+r_series(age, 5, 100, relate = "+5_0")
+r_series(likert, 5,  100, name ="Item", relate = "-.5_.1")
+r_series(grade, j = 5, n = 100, relate = "*1.05_.1")
+```
+
 # Adjust Correlations
 
 Use the `sd` command to adjust correlations.
